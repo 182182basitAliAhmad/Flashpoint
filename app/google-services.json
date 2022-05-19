@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "703786900453",
+    "project_id": "flashpoint-asdevelopers",
+    "storage_bucket": "flashpoint-asdevelopers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703786900453:android:6df5c3a56c41d4b805ed0c",
+        "android_client_info": {
+          "package_name": "com.asdevelopers.flashpoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703786900453-ggl9kqjvf0ntiuegvd0k97n4hj1sjk2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asdevelopers.flashpoint",
+            "certificate_hash": "4dd742e82dd8413c38d7fb5e4353aaea710f6aca"
+          }
+        },
+        {
+          "client_id": "703786900453-hf3a00f170m1njb28pfg8k0abq3tmv8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsbvzOCfcC0PyVToQ2nEfgs5_H_0FVyOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703786900453-hf3a00f170m1njb28pfg8k0abq3tmv8j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
