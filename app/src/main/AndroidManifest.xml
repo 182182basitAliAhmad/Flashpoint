@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DeckActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />

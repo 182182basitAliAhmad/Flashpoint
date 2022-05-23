@@ -2,7 +2,6 @@ package com.asdevelopers.flashpoint.activity;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -15,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.asdevelopers.flashpoint.R;
 import com.asdevelopers.flashpoint.adapter.HomeRecyclerViewAdapter;
-
 import com.asdevelopers.flashpoint.model.Database;
-import com.asdevelopers.flashpoint.model.FlashpointSQLiteHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
         resetDisplayedData();
-
     }
 
     @Override
