@@ -28,5 +28,4 @@ public class Deck {
     public int getNoOfCards() {
         return noOfCards;
     }
-
 }

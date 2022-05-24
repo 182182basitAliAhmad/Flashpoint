@@ -1,12 +1,15 @@
 package com.asdevelopers.flashpoint.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.asdevelopers.flashpoint.R;
 import com.asdevelopers.flashpoint.adapter.HomeRecyclerViewAdapter;
 import com.asdevelopers.flashpoint.model.Database;
+import com.asdevelopers.flashpoint.model.Deck;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     HomeRecyclerViewAdapter homeRecyclerViewAdapter;
     SearchView searchView;
 
+    String userID;
+
     Database database;
+    DatabaseReference databaseReference;
+    DataSnapshot data;
 
     public void resetDisplayedData() {
         homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(this, database);
@@ -58,6 +75,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userID = getIntent().getStringExtra("userID");
+
+        if (userID == null)
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        databaseReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                data = task.getResult();
+
+                map = data.getValue(String.class);
+
+                for (DataSnapshot d: data.getChildren()) {
+                    map.put(d.getKey(), d.getValue());
+                }
+            }
+        });
+
         database = new Database(this);
 
         searchView = findViewById(R.id.search_view);
@@ -89,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
             container.addView(input);
             alert.setView(container);
             alert.setPositiveButton("Add", (dialog, whichButton) -> {
+                String deckTitle = input.getText().toString();
+
+
+
                 database.addDeck(input.getText().toString());
                 resetDisplayedData();
                 Toast.makeText(MainActivity.this, "Deck created Successfully", Toast.LENGTH_SHORT).show();

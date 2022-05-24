@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.asdevelopers.flashpoint.R;
 import com.asdevelopers.flashpoint.model.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -60,21 +61,26 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             User user = new User(fullName, email);
 
+                            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                             FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(userID)
                                     .setValue(user).addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {
-                                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                            intent.putExtra("userID", userID);
+                                            startActivity(intent);
                                         } else {
-                                            Toast.makeText(RegisterActivity.this, "Not Registered", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "User database failed", Toast.LENGTH_SHORT).show();
                                         }
-                                        progressBar.setVisibility(View.GONE);
                                     });
+
+
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(RegisterActivity.this, "Account creation failed", Toast.LENGTH_SHORT).show();
                         }
                     });
+            progressBar.setVisibility(View.GONE);
         });
     }
 }
